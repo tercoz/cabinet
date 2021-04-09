@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,9 +20,10 @@ import java.util.Map;
 public class CabinetApplication extends WebSecurityConfigurerAdapter {
 
     @GetMapping("/")
-    public Map<String, Object> root(@AuthenticationPrincipal OAuth2User oauth2User, HttpSession session) {
-        Map<String, Object> map = new HashMap<>(oauth2User.getAttributes());
+    public Map<String, Object> root(@AuthenticationPrincipal OidcUser user, HttpSession session) {
+        Map<String, Object> map = new HashMap<>();
         map.put("slavs", session.getAttribute("slavs"));
+        map.put("oidcUser", user);
         return map;
     }
 
