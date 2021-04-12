@@ -2,6 +2,7 @@ package ru.fber.cabinet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -10,13 +11,15 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.fber.cabinet.session.ignite.EnableIgniteHttpSession;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @RestController
+@EnableIgniteHttpSession
 public class CabinetApplication extends WebSecurityConfigurerAdapter {
 
     @GetMapping("/")

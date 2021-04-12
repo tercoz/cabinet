@@ -1,8 +1,11 @@
 server:
   port: 9080
 spring:
-  datasource:
-    url: jdbc:ignite:thin://localhost:10800
-    driver-class-name: org.apache.ignite.IgniteJdbcThinDriver
   session:
-    store-type: jdbc
+    ignite:
+      defaultMaxInactiveInterval: 180
+      cacheName: spring.session.cache
+ignite-client:
+  addresses: 127.0.0.1:10800 # this is mandatory property!
+  timeout: 10000
+  tcpNoDelay: false
